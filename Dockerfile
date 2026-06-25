@@ -30,6 +30,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy entire project into container
 COPY . .
+# Explicitly copy scrapyd config to ensure it's loaded
+COPY scrapyd.cfg /etc/scrapyd/scrapyd.cfg
 
 # Create necessary directories
 RUN mkdir -p output logs database eggs dbs
