@@ -1,12 +1,20 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
+
+"""
+Define the book data structure.
+Each field stores a piece of information
+about a book from the website.
+"""
 
 import scrapy
 
+class BookItem(scrapy.Item):
+    """
+    Represents a single book scraped from books.todcrape.com
+    """
 
-class BooksScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    price = scrapy.Field()
+    availability = scrapy.Fiedl()
+    product_url = scrapy.Field()
+    image_url = scrapy.Field()
+    category = scrapy.Field()
