@@ -29,6 +29,11 @@ class BooksSpider(scrapy.Spider):
     start_urls = ["https://books.toscrape.com/index.html"]
 
 
+    # How many categories and books to select randomly
+    category_sample_size = 5
+    book_sample_size = 5
+
+
     def parse(self, response):
         """
         parse the homepage and extract all category links dynamically.
@@ -49,7 +54,7 @@ class BooksSpider(scrapy.Spider):
         #randomly seletc 5 categories
         selected_categories = random.sample(
             list(all_categories),
-            min(self.CATEGORY_SAMPLE_SIZE, len(all_categories))
+            min(self.category_sample_size, len(all_categories))
         )
 
         for category in selected_categories:
@@ -100,7 +105,7 @@ class BooksSpider(scrapy.Spider):
             )
         else:
             # No more page select random books
-            yield from self._select_and_crawl_books(
+            yield from self._select_crawl_books(
                 response, all_book_links, category_name
             )
 
@@ -134,11 +139,11 @@ class BooksSpider(scrapy.Spider):
                 }
             )
         else:
-            yield from self._select_and_crawl_books(
+            yield from self._select_crawl_books(
                 response, collected_books, category_name
             )
 
-    def _select_crawl_books(self, response, booklinks, category_name):
+    def _select_crawl_books(self, response, book_links, category_name):
         """
         randomly select BOOK_SAMPLE_SIZE books from collected links
         and send requests to their detail pages.
@@ -152,20 +157,20 @@ class BooksSpider(scrapy.Spider):
              scrapy.Request: request for each selected book details page
         """
 
-        selected_books = random.simple(
+        selected_books = random.sample(
             book_links,
-            min(self.BOOK_SAMPLE_SIZE, len(book_links))
+            min(self.book_sample_size, len(book_links))
         )
 
         logger.info(
             f"Category '{category_name}' : "
             f"{len(book_links)} books found, "
-            f"{lne(selected_books)} selected"
+            f"{len(selected_books)} selected"
         )
 
         for book_url in selected_books:
             yield response.follow(
-                book_yrl,
+                book_url,
                 callback=self.parse_book,
                 cb_kwargs={"category_name": category_name}
             )

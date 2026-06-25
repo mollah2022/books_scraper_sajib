@@ -20,7 +20,7 @@ USER_AGENT = (
 
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # CRAWL BEHAVIOR
 # Number of concurrent requests

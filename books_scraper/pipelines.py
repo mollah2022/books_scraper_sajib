@@ -14,7 +14,7 @@ from itemadapter import ItemAdapter
 
 logger = logging.getLogger(__name__)
 
-class DateCleaningPipeline:
+class DataCleaningPipeline:
     """
     cleans and normalizes scraped book data.
 
@@ -57,12 +57,12 @@ class DateCleaningPipeline:
              adapter: ItemAdapter wrapping the current item
         """
 
-        for field_name in adapter.fields_names():
+        for field_name in adapter.field_names():
             value = adapter.get(field_name)
             if isinstance(value, str):
                 adapter[field_name] = value.strip()
 
-            elseif isinstance(value, list):
+            elif isinstance(value, list):
                 #join list value and strip( e.g., availability text)
                 adapter[field_name] = " ".join(value).strip()
 
