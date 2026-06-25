@@ -29,3 +29,9 @@ build/
 .vscode/
 .idea/
 *.swp
+
+# Pycache
+**/__pycache__/
+*.pyc
+*.pyo
+

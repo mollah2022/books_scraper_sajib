@@ -1,0 +1,20 @@
+# Docker Compose configuration for the Books Scraper project.
+# Defines services, volumes, and networking for the application.
+
+version: '3.8'
+
+services:
+  books_scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: books_scraper
+    ports:
+      - "6800:6800"
+    volumes:
+      - ./output:/app/output
+      - ./database:/app/database
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
